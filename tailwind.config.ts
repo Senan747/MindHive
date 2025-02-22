@@ -12,6 +12,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        hyperlegible: "var(--font-hyperlegible-mono)",
+        merriweather: "var(--font-merriweather)",
+      },
     },
   },
   plugins: [],

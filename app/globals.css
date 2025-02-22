@@ -19,3 +19,18 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.hover-effect {
+  padding-bottom: 3px;
+  transition: border-bottom 0.1s ease-in-out, padding 0.1s ease-in-out;
+}
+
+.hover-effect:hover {
+  border-bottom: 2px solid black;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
