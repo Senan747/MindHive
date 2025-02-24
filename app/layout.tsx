@@ -6,6 +6,7 @@ import {
   Merriweather,
 } from "next/font/google";
 import "./globals.css";
+import "easymde/dist/easymde.min.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

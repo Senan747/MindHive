@@ -23,12 +23,14 @@ const BlogCard = ({ blog }: { blog: BlogType }) => {
           className="w-full h-full rounded-md"
         />
       </div>
-      <div className="rounded-lg text-[#4B6BFB] bg-[#F6F7FF] text-[14px] font-sans py-[4px] px-[10px] mt-[24px] mb-[16px]">
+      <div className="rounded-lg text-[#4B6BFB] bg-[#F6F7FF] text-[14px] font-sans py-[4px] px-[10px] mt-[12px] mb-[8px]">
         <span>{blog?.category}</span>
       </div>
       <div className="h-[80px]">
         <span className="text-[24px] font-semibold font-sans h-[80px]">
-          {blog.title}
+          {blog?.title?.length > 60
+            ? `${blog?.title.slice(0, 60)}...`
+            : `${blog?.title}`}
         </span>
       </div>
       <div className="mt-3 flex gap-2">
