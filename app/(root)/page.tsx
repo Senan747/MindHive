@@ -1,15 +1,16 @@
 import Image from "next/image";
 import SearchForm from "@/components/SearchForm";
 import BlogCard from "@/components/BlogCard";
+import { BLOGS_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/live";
 
 interface BlogType {
   title: string;
-  id: number;
-  view: number;
-  createdAt: string;
-  author: { id: number; name: string };
-  profile_image: string;
-  blog_image: string;
+  _id: number;
+  views: number;
+  _createdAt: string;
+  author: { _id: number; name: string; image: string; info: string };
+  image: string;
   category: string;
 }
 
@@ -20,58 +21,12 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
 
-  const blogs = [
-    {
-      id: 1,
-      createdAt: new Date().toISOString(),
-      author: { id: 1, name: "Sanan" },
-      title:
-        "The Impact of Technology on the Workplace: method returns selected elements in an array, as a new array.",
-      view: 77,
-      profile_image:
-        "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
-      blog_image:
-        "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHRlY2hub2xvZ3l8ZW58MHx8MHx8fDA%3D",
-      category: "Technology",
-    },
-    {
-      id: 2,
-      createdAt: new Date().toISOString(),
-      author: { id: 2, name: "Sanan" },
-      title: "React js",
-      view: 77,
-      profile_image:
-        "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg",
-      blog_image:
-        "https://images.unsplash.com/photo-1504639725590-34d0984388bd?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW5mb3JtYXRpb24lMjB0ZWNobm9sb2d5fGVufDB8fDB8fHww",
-      category: "Technology",
-    },
-    {
-      id: 3,
-      createdAt: new Date().toISOString(),
-      author: { id: 2, name: "Sanan" },
-      title: "React js",
-      view: 77,
-      profile_image:
-        "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg",
-      blog_image:
-        "https://images.unsplash.com/photo-1504639725590-34d0984388bd?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW5mb3JtYXRpb24lMjB0ZWNobm9sb2d5fGVufDB8fDB8fHww",
-      category: "Technology",
-    },
-    {
-      id: 4,
-      createdAt: new Date().toISOString(),
-      author: { id: 2, name: "Sanan" },
-      title: "React js",
-      view: 77,
-      profile_image:
-        "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg",
-      blog_image:
-        "https://images.unsplash.com/photo-1504639725590-34d0984388bd?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW5mb3JtYXRpb24lMjB0ZWNobm9sb2d5fGVufDB8fDB8fHww",
-      category: "Technology",
-    },
-  ];
+  const blogs = await sanityFetch({ query: BLOGS_QUERY, params: {} });
 
+  console.log(blogs);
+
+  // console.log(await sanityFetch({ BLOGS_QUERY }));
+  console.log(blogs);
   return (
     <div className="center flex-col py-14 gap-10">
       <section className="w-full center relative">
@@ -115,9 +70,9 @@ export default async function Home({
           height={10}
         />
         <ul className="grid grid-cols-3 gap-[20px] mt-4">
-          {blogs?.length > 0
-            ? blogs.map((blog: BlogType, index: number) => {
-                return <BlogCard blog={blog} key={blog?.id} />;
+          {blogs?.data?.length > 0
+            ? blogs?.data.map((blog: BlogType, key: number) => {
+                return <BlogCard blog={blog} key={blog?._id} />;
               })
             : "No article found"}
         </ul>
