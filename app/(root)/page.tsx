@@ -20,13 +20,10 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
+  const params = { search: query || null };
 
-  const blogs = await sanityFetch({ query: BLOGS_QUERY, params: {} });
+  const blogs = await sanityFetch({ query: BLOGS_QUERY, params });
 
-  console.log(blogs);
-
-  // console.log(await sanityFetch({ BLOGS_QUERY }));
-  console.log(blogs);
   return (
     <div className="center flex-col py-14 gap-10">
       <section className="w-full center relative">
@@ -69,13 +66,23 @@ export default async function Home({
           width={200}
           height={10}
         />
-        <ul className="grid grid-cols-3 gap-[20px] mt-4">
-          {blogs?.data?.length > 0
-            ? blogs?.data.map((blog: BlogType, key: number) => {
-                return <BlogCard blog={blog} key={blog?._id} />;
-              })
-            : "No article found"}
-        </ul>
+
+        {blogs?.data?.length > 0 ? (
+          <ul className="grid grid-cols-3 gap-[20px] mt-4">
+            {blogs?.data.map((blog: BlogType) => {
+              return <BlogCard blog={blog} index={blog._id} />;
+            })}
+          </ul>
+        ) : (
+          <div className="center flex-col w-full">
+            <Image
+              src={"/not-found.jpg"}
+              alt="not-found"
+              width={400}
+              height={400}
+            />
+          </div>
+        )}
       </section>
     </div>
   );

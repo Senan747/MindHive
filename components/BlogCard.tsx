@@ -12,11 +12,11 @@ interface BlogType {
   category: string;
 }
 
-const BlogCard = ({ blog, key }: { blog: BlogType; key: number }) => {
+const BlogCard = ({ blog, index }: { blog: BlogType; index: number }) => {
   return (
     <li
       className="flex items-start p-[16px] flex-col  border border-[rgb(232,232,234)] rounded-2xl w-[392px] h-[500px]"
-      key={key}
+      key={index}
     >
       <div className="w-[360px] h-[240px]">
         <img src={blog?.image} alt="" className="w-full h-full rounded-md" />
